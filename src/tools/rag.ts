@@ -57,7 +57,7 @@ export const ragTool = new FunctionTool({
     query: z
       .string()
       .describe("The search query to find relevant tax information."),
-  }) as any,
+  }),
   execute: async (input: unknown) => {
     const { query } = input as { query: string };
     return await searchKnowledgeBase(query);
