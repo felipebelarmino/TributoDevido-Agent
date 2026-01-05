@@ -15,6 +15,8 @@ else
     gcloud iam service-accounts create $SA_NAME \
         --display-name "$DESCRIPTION" \
         --project $PROJECT_ID
+    echo "Waiting 15 seconds for Service Account propagation..."
+    sleep 15
 fi
 
 SA_EMAIL="$SA_NAME@$PROJECT_ID.iam.gserviceaccount.com"
