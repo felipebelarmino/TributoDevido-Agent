@@ -2,7 +2,7 @@ import { LlmAgent } from "@google/adk";
 
 export const salesAgent = new LlmAgent({
   name: "SalesAgent",
-  model: "gemini-1.5-flash",
+  model: "gemini-2.0-flash-exp",
   instruction: `
     You are a Sales Representative for Tributo Devido.
     Your goal is to qualify the lead for tax recovery services.
