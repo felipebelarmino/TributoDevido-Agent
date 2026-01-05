@@ -62,10 +62,19 @@ gcloud config set project td-multi-agent-faq-1
 
 Certifique-se de que o arquivo `.env` existe na raiz do projeto com o seguinte conteúdo (ajuste se necessário):
 
+**3.1 Obter Chave da API (Gemini)**:
+
+1. Acesse o [Google AI Studio](https://aistudio.google.com/app/apikey).
+2. Clique em "Create API Key".
+3. Copie a chave gerada.
+
+**3.2 Preencher o .env**:
+
 ```env
 GOOGLE_CLOUD_PROJECT=td-multi-agent-faq-1
 GOOGLE_CLOUD_LOCATION=us-central1
 VERTEX_SEARCH_DATA_STORE_ID=tributo-kb-id
+GOOGLE_GENAI_API_KEY=SuaChaveAqui
 ```
 
 ### 3. Como Rodar
