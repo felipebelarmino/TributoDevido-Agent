@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# TypeScript Build Output
+dist/
+build/
+
+# Environment Variables (Critical Security)
+.env
+.env.test
+.env.production
+.env.local
+
+# Google Cloud & Credentials
+service-account-key.json
+*.json
+!package.json
+!tsconfig.json
+!manifest.json
+.gcloud/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# OS & IDE Files
+.DS_Store
+.vscode/
+.idea/
+Thumbs.db
+*.swp
+
+# Artifacts/Temp
+tmp/
+coverage/
