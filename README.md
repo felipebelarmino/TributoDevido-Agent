@@ -17,31 +17,38 @@ No diretório raiz do projeto, execute:
 npm install
 ```
 
-### 2. Autenticação Google Cloud (Passo Crítico)
+### 2. Autenticação e Configuração Google Cloud
 
-Para que os agentes possam acessar a base de conhecimento no Vertex AI, você precisa configurar as credenciais locais. Siga estes passos rigorosamente:
+Para que os agentes possam acessar a base de conhecimento no Vertex AI, siga estes passos rigorosamente:
 
-**2.1 Instalar o Google Cloud SDK** (se ainda não tiver):
+**2.1 Pré-requisitos (Console)** Antes de rodar comandos localmente, garanta que seu projeto GCP esteja pronto:
 
-```bash
-sudo snap install google-cloud-cli --classic
-```
+1.  **Faturamento (Billing)**: Ative a conta de faturamento no console Google Cloud. Sem isso, as APIs da Vertex AI não funcionam (erro `FAILED_PRECONDITION`).
+2.  **Data Store (Vertex AI Search)**:
+    - Acesse [Vertex AI Agent Builder](https://console.cloud.google.com/gen-app-builder/engines).
+    - Crie um novo App do tipo **Search**.
+    - **Nome**: `Tributo Knowledge Base`.
+    - **ID do Data Store**: `tributo-kb-id` (Essencial ser exato).
+    - **Edição**: Standard ou Enterprise.
+    - **Localização**: `us-central1` (ou global).
 
-**2.2 Configuração Automática de Recursos (Recomendado)**
+**2.2 Configuração Local (Script Auxiliar)**
 
-Execute o script auxiliar para ativar as APIs necessárias e tentar criar o Data Store:
+Após configurar o console, execute o script para ativar as APIs e validar o ambiente:
 
 ```bash
 ./scripts/setup_gcp.sh
 ```
 
-**2.3 Login e Geração de Credenciais (ADC)**: Se ainda não fez login:
+**2.3 Login e Geração de Credenciais (ADC)** Fundamental para o código rodar localmente:
 
 ```bash
-gcloud auth application-default login
+sudo snap install google-cloud-cli --classic  # Se necessário
+gcloud auth login                             # Login de gerenciamento
+gcloud auth application-default login         # Credenciais para o código
 ```
 
-_Uma janela do navegador abrirá. Faça login com a conta Google que tem permissão no projeto._ _Após o login, confirme que o arquivo de credenciais foi salvo (o terminal mostrará o caminho)._
+_Nota: Confirme que o arquivo de credenciais foi salvo corretamente._
 
 **2.3 Definir o Projeto Padrão**: Configure o CLI para usar o projeto correto da Tributo Devido:
 
