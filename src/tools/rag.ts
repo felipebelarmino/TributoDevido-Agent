@@ -12,6 +12,23 @@ if (location !== "global") {
 }
 const client = new SearchServiceClient(options);
 
+// Helper to parse Protobuf Struct
+function extractValue(val: any): any {
+  if (val.stringValue !== undefined) return val.stringValue;
+  if (val.structValue) return parseStruct(val.structValue);
+  if (val.listValue) return (val.listValue.values || []).map(extractValue);
+  return null;
+}
+
+function parseStruct(struct: any): any {
+  const result: any = {};
+  if (!struct.fields) return result;
+  for (const key in struct.fields) {
+    result[key] = extractValue(struct.fields[key]);
+  }
+  return result;
+}
+
 export async function searchKnowledgeBase(query: string): Promise<string> {
   try {
     const servingConfig = client.projectLocationDataStoreServingConfigPath(
@@ -27,6 +44,7 @@ export async function searchKnowledgeBase(query: string): Promise<string> {
       pageSize: 5,
       contentSearchSpec: {
         snippetSpec: { returnSnippet: true },
+        extractiveContentSpec: { maxExtractiveAnswerCount: 1 },
       },
     };
 
@@ -37,10 +55,31 @@ export async function searchKnowledgeBase(query: string): Promise<string> {
 
     return results
       .map((result) => {
-        const doc = result.document?.derivedStructData as any;
-        const snippet = doc?.snippets?.[0]?.snippet || "";
-        const title = doc?.title || "Unknown Source";
-        return `Source: ${title}\nContent: ${snippet}`;
+        let doc = (result.document?.structData ||
+          result.document?.derivedStructData ||
+          {}) as any;
+
+        // Auto-parse if it looks like a Protobuf Struct
+        if (doc.fields) {
+          doc = parseStruct(doc);
+        }
+
+        const title = doc.title || doc.name || doc.link || "Unknown Source";
+
+        // Handle different snippet locations/formats
+        let snippet = "";
+        if (doc.snippets && doc.snippets.length > 0) {
+          snippet = doc.snippets[0].snippet || doc.snippets[0].content || "";
+        } else if (
+          doc.extractive_segments &&
+          doc.extractive_segments.length > 0
+        ) {
+          snippet = doc.extractive_segments[0].content || "";
+        } else if (doc.content) {
+          snippet = doc.content;
+        }
+
+        return `Source: ${title}\nContent: ${snippet.trim()}`;
       })
       .join("\n\n");
   } catch (error) {
