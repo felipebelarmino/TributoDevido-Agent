@@ -31,6 +31,7 @@ ROLES=(
     "roles/storage.admin"            # Upload source/images to GCS/GCR
     "roles/artifactregistry.writer"  # Push images
     "roles/serviceusage.serviceUsageConsumer" # Check API status
+    "roles/viewer"                   # Fix: Required to stream build logs
 )
 
 for role in "${ROLES[@]}"; do
