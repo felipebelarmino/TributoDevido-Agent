@@ -64,17 +64,29 @@ export async function searchKnowledgeBase(query: string): Promise<string> {
           doc = parseStruct(doc);
         }
 
-        const title = doc.title || doc.name || doc.link || "Unknown Source";
+        let rawTitle = doc.title || doc.name || doc.link || "Unknown Source";
+
+        // Cleanup title: remove timestamp prefix, file extension, and format
+        // Example: 1767636013307_manual_simples_nacional -> Manual Simples Nacional
+        const title = rawTitle
+          .replace(/^\d+_/, "") // Remove leading timestamp + underscore
+          .replace(/\.[^/.]+$/, "") // Remove file extension
+          .replace(/_/g, " ") // Replace underscores with spaces
+          .replace(/\b\w/g, (c: string) => c.toUpperCase()); // Title Case
 
         // Handle different snippet locations/formats
+        // Handle different snippet locations/formats - Prioritize Extractive Answers
         let snippet = "";
-        if (doc.snippets && doc.snippets.length > 0) {
-          snippet = doc.snippets[0].snippet || doc.snippets[0].content || "";
+
+        if (doc.extractive_answers && doc.extractive_answers.length > 0) {
+          snippet = doc.extractive_answers[0].content || "";
         } else if (
           doc.extractive_segments &&
           doc.extractive_segments.length > 0
         ) {
           snippet = doc.extractive_segments[0].content || "";
+        } else if (doc.snippets && doc.snippets.length > 0) {
+          snippet = doc.snippets[0].snippet || doc.snippets[0].content || "";
         } else if (doc.content) {
           snippet = doc.content;
         }
