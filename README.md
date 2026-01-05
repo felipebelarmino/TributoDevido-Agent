@@ -2,6 +2,8 @@
 
 Este projeto implementa um Sistema Multi-Agentes para auxiliar na recuperação tributária (PIS/COFINS) para empresas do Simples Nacional, utilizando o Google Agent Development Kit (ADK) e Vertex AI Search.
 
+![Sistema em Funcionamento](assets/example.png)
+
 ## Pré-requisitos
 
 - Node.js (v18 ou superior)
@@ -66,13 +68,25 @@ GOOGLE_CLOUD_LOCATION=us-central1
 VERTEX_SEARCH_DATA_STORE_ID=tributo-kb-id
 ```
 
-## Como Rodar
+### 3. Como Rodar
 
-Para iniciar o servidor de desenvolvimento e a interface web de depuração do ADK:
+Basta executar o comando abaixo. Ele compila o projeto e inicia a interface de depuração:
 
 ```bash
 npm start
 ```
+
+- **Acesse o navegador**: Uma URL será exibida (geralmente `http://localhost:8000`).
+- **Interaja**: Digite "Oi" para falar com o Vendas ou faça uma pergunta técnica ("PIS monofásico...") para o Especialista.
+
+### 4. Modelos Utilizados (Verificados)
+
+Este projeto foi configurado e validado com as versões mais recentes disponíveis para sua chave (Gemini 2.5):
+
+- **Gemini 2.5 Flash**: Usado para roteamento (Dispatcher) e interações rápidas (Vendas).
+- **Gemini 2.5 Pro**: Usado para raciocínio complexo (Especialista Tributário e Auditor de Compliance).
+
+_Nota: Se encontrar erros de "Model not found", verifique se sua chave API tem acesso a estas versões Beta/Experimental._
 
 Isso irá:
 
