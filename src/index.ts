@@ -1,12 +1,16 @@
 import { dispatcher } from "./agents/dispatcher.js";
 
-// Export the root agent for ADK CLI/Runner
-export default dispatcher;
-export const rootAgent = dispatcher; // Required by ADK loader?
-export const agent = dispatcher;
-export const agents = [dispatcher];
-
-// Optional: Simple self-run if executed directly (e.g. via ts-node)
-if (require.main === module) {
-  console.log('Agent loaded. Use "adk run" or "adk web" to interact.');
+console.log("--- Agent Tree Initialization ---");
+console.log(`Root Agent: ${dispatcher.name}`);
+if (dispatcher.subAgents) {
+  console.log(
+    `SubAgents: ${dispatcher.subAgents.map((a) => a.name).join(", ")}`
+  );
+} else {
+  console.log("No SubAgents found on Root Agent!");
 }
+console.log("---------------------------------");
+
+// Export the root agent
+export const rootAgent = dispatcher;
+export default dispatcher;

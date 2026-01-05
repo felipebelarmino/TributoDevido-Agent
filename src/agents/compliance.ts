@@ -3,7 +3,7 @@ import { taxExpert } from "./tax_expert.js";
 
 const auditor = new LlmAgent({
   name: "Auditor",
-  model: "gemini-1.5-pro-002",
+  model: "gemini-2.5-pro",
   instruction: `
     You are a strict Tax Auditor. Your job is to review the draft answer provided by the TaxExpert.
     

@@ -3,7 +3,7 @@ import { ragTool } from "../tools/rag.js";
 
 export const taxExpert = new LlmAgent({
   name: "TaxExpert",
-  model: "gemini-1.5-pro-002",
+  model: "gemini-2.5-pro",
   tools: [ragTool],
   instruction: `
     You are a Senior Tax Consultant for "Tributo Devido".

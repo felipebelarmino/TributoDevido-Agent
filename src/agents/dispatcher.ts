@@ -4,7 +4,7 @@ import { salesAgent } from "./sales.js";
 
 export const dispatcher = new LlmAgent({
   name: "Dispatcher",
-  model: "gemini-2.0-flash-exp",
+  model: "gemini-2.5-flash",
   instruction: `
     You are the main receptionist for Tributo Devido.
     Analyze the user's input to decide the best course of action.
