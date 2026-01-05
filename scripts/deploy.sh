@@ -14,15 +14,19 @@ fi
 
 echo "--- Deploying to Cloud Run ($SERVICE_NAME) ---"
 
-# Check if gcloud is installed
-if ! command -v gcloud &> /dev/null; then
-    echo "gcloud could not be found. Please install Google Cloud SDK."
-    exit 1
-fi
+# Enable necessary APIs
+echo "Enabling necessary APIs..."
+gcloud services enable cloudbuild.googleapis.com artifactregistry.googleapis.com run.googleapis.com
 
-# Deploy
+# 1. Build the image using Cloud Build (bypasses local Docker and service account issues)
+IMAGE_URL="gcr.io/$GOOGLE_CLOUD_PROJECT/$SERVICE_NAME"
+echo "Building container image: $IMAGE_URL"
+gcloud builds submit --tag $IMAGE_URL .
+
+# 2. Deploy the built image to Cloud Run
+echo "Deploying to Cloud Run..."
 gcloud run deploy $SERVICE_NAME \
-  --source . \
+  --image $IMAGE_URL \
   --region $REGION \
   --port 8080 \
   --allow-unauthenticated \
@@ -33,4 +37,3 @@ gcloud run deploy $SERVICE_NAME \
   --quiet
 
 echo "--- Deployment Complete ---"
-echo "Share the URL above with your testers."

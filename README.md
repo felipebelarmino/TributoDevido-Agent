@@ -4,6 +4,8 @@ Este projeto implementa um Sistema Multi-Agentes para auxiliar na recuperação 
 
 ![Sistema em Funcionamento](assets/example.png)
 
+> **🚀 Demo HML**: [Acessar Versão de Desenvolvimento (Cloud Run)](https://tributo-devido-agent-hml-829114946536.us-central1.run.app)
+
 ## Pré-requisitos
 
 - Node.js (v18 ou superior)
