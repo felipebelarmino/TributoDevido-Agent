@@ -13,6 +13,7 @@
   "description": "",
   "dependencies": {
     "@google-cloud/discoveryengine": "^2.5.2",
+    "@google-cloud/firestore": "^8.0.0",
     "@google-cloud/storage": "^7.18.0",
     "@google/adk": "^0.2.1",
     "@google/adk-devtools": "^0.2.1",
