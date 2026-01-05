@@ -1,22 +1,18 @@
 #!/bin/bash
+set -e
 
 # Configuration
 SERVICE_NAME="tributo-devido-agent-hml"
 REGION="us-central1"
 
-# Load .env variables
+# Load .env variables if present
 if [ -f .env ]; then
   export $(cat .env | grep -v '#' | awk '/=/ {print $1}')
 else
-  echo "Error: .env file not found!"
-  exit 1
+  echo ".env file not found. Assuming variables are set in environment (CI/CD)."
 fi
 
 echo "--- Deploying to Cloud Run ($SERVICE_NAME) ---"
-
-# Enable necessary APIs
-echo "Enabling necessary APIs..."
-gcloud services enable cloudbuild.googleapis.com artifactregistry.googleapis.com run.googleapis.com
 
 # 1. Build the image using Cloud Build (bypasses local Docker and service account issues)
 IMAGE_URL="gcr.io/$GOOGLE_CLOUD_PROJECT/$SERVICE_NAME"
