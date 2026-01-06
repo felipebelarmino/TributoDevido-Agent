@@ -1,0 +1,26 @@
+
+# MANUAL DO SIMPLES NACIONAL - RECUPERAÇÃO DE PIS/COFINS MONOFÁSICO
+# Data de Atualização: 05/01/2026
+
+1. O QUE SÃO PRODUTOS MONOFÁSICOS?
+Produtos sujeitos à incidência monofásica de PIS e COFINS são aqueles onde a tributação ocorre concentrada no importador ou fabricante.
+Isso significa que atacadistas e varejistas (como farmácias, autopeças, pet shops) NÃO devem recolher esses impostos novamente na venda ao consumidor final.
+
+2. SEGMENTOS BENEFICIADOS
+Os principais segmentos que vendem produtos monofásicos são:
+- Farmácias e Drogarias (perfumaria, cosméticos, medicamentos)
+- Autopeças (peças de carros, óleos lubrificantes, pneus)
+- Bares e Restaurantes (bebidas frias: cervejas, refrigerantes, águas)
+- Pet Shops (produtos veterinários, rações)
+
+3. CÓDIGO DE SITUAÇÃO TRIBUTÁRIA (CST)
+Para segregar corretamente as receitas, o contribuinte deve utilizar o CST correto na emissão da Nota Fiscal:
+- CST 04: Operação Tributável Monofásica - Revenda a Alíquota Zero.
+
+4. COMO RECUPERAR?
+A recuperação é feita através da retificação do PGDAS-D dos últimos 60 meses (5 anos).
+O valor pago indevidamente é solicitado via PER/DCOMP e geralmente é restituído em conta corrente em até 60 dias.
+
+5. EXEMPLO PRÁTICO
+Uma farmácia que fatura R$ 100.000,00 mensais e vende 40% de produtos monofásicos (perfumaria/medicamentos), se pagar o imposto cheio, estará pagando PIS/COFINS sobre esses 40% indevidamente.
+Correção: No PGDAS, deve-se marcar "Receita com Tributação Monofásica" para essa parcela de R$ 40.000,00.

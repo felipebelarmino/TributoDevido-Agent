@@ -1,4 +1,10 @@
-import { LlmAgent, LoopAgent } from "@google/adk";
+import {
+  BaseAgent,
+  Event,
+  InvocationContext,
+  LlmAgent,
+  stringifyContent,
+} from "@google/adk";
 import { taxExpert } from "./tax_expert.js";
 
 const auditor = new LlmAgent({
@@ -21,8 +27,44 @@ const auditor = new LlmAgent({
   `,
 });
 
-export const complianceFlow = new LoopAgent({
-  name: "ComplianceFlow",
-  subAgents: [taxExpert, auditor],
-  maxIterations: 3,
-});
+class ComplianceLoopAgent extends BaseAgent {
+  constructor() {
+    super({
+      name: "ComplianceFlow",
+    });
+  }
+
+  protected async *runAsyncImpl(
+    context: InvocationContext
+  ): AsyncGenerator<Event, void, void> {
+    const maxIterations = 3;
+
+    for (let i = 0; i < maxIterations; i++) {
+      // 1. Run Tax Expert
+      for await (const event of taxExpert.runAsync(context)) {
+        yield event;
+      }
+
+      // 2. Run Auditor
+      let auditorResponse = "";
+      for await (const event of auditor.runAsync(context)) {
+        yield event;
+        auditorResponse += stringifyContent(event);
+      }
+
+      // 3. Check termination
+      if (auditorResponse.includes("TERMINATE")) {
+        return;
+      }
+    }
+  }
+
+  // Live mode implementation (delegates to async for now or simplified)
+  protected async *runLiveImpl(
+    context: InvocationContext
+  ): AsyncGenerator<Event, void, void> {
+    yield* this.runAsyncImpl(context);
+  }
+}
+
+export const complianceFlow = new ComplianceLoopAgent();
